@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Для Кати ❤️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;500;600&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ═══════════ ЭКРАН-ПАРОЛЬ ═══════════ -->
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-bg-glow"></div>
+  <div class="lock-content">
+    <div class="lock-heart">❤</div>
+    <h1 class="lock-title">Это маленький сайт<br>только для тебя</h1>
+    <p class="lock-subtitle">Введи дату, с которой всё началось</p>
+    <div class="lock-input-wrap">
+      <input type="text" id="dateInput" class="lock-input" placeholder="ДД.ММ.ГГГГ" maxlength="10" inputmode="numeric" autocomplete="off">
+      <button class="lock-btn" id="lockBtn">Открыть</button>
+    </div>
+    <p class="lock-error" id="lockError"></p>
+  </div>
+  <div class="lock-transition" id="lockTransition">
+    <div class="lock-transition-hearts" id="transitionHearts"></div>
+  </div>
+</div>
+
+<!-- ═══════════ ГЛАВНЫЙ САЙТ ═══════════ -->
+<div class="site" id="site">
+
+  <nav class="nav">
+    <a href="#home" class="nav-link active">Главная</a>
+    <a href="#memories" class="nav-link">Воспоминания</a>
+    <a href="#music-section" class="nav-link">Наша музыка</a>
+  </nav>
+
+  <button class="letter-btn" id="letterBtn" title="Письмо от Ильи">💌</button>
+<!-- ═══════════ КНОПКА ПОДАРКА ═══════════ -->
+<button class="gift-btn" id="giftBtn" title="Тебе подарок 🎁">🎁</button>
+
+<!-- ═══════════ СЮРПРИЗ ═══════════ -->
+<div class="gift-overlay" id="giftOverlay">
+
+  <!-- Уровень 1: сердечко -->
+  <div class="gift-stage" id="stage1">
+    <p class="gift-hint">Зажми на сердечке, чтобы оно росло 💗</p>
+    <div class="gift-target" id="heartTarget">
+      <div class="gift-heart" id="giftHeart">❤</div>
+    </div>
+    <div class="gift-progress"><div class="gift-progress-fill" id="fill1"></div></div>
+  </div>
+
+  <!-- Уровень 2: огонь -->
+  <div class="gift-stage" id="stage2" style="display:none;">
+    <p class="gift-hint">Теперь зажми на огоньке 🔥</p>
+    <div class="gift-target" id="fireTarget">
+      <div class="gift-burn-circle" id="burnCircle"></div>
+      <div class="gift-fire" id="giftFire">🔥</div>
+    </div>
+    <div class="gift-progress"><div class="gift-progress-fill" id="fill2"></div></div>
+  </div>
+
+  <!-- Финал: кольцо -->
+  <div class="gift-stage" id="stage3" style="display:none;">
+    <div class="ring-wrap">
+      <div class="ring-glow"></div>
+      <div class="ring">💍</div>
+    </div>
+    <h2 class="gift-question">Выйдешь за меня?</h2>
+    <p class="gift-question-sub">пока что по интернету, но хотя бы так )</p>
+    <div class="gift-answers">
+      <button class="gift-yes" id="giftYes">Да ❤</button>
+      <button class="gift-no" id="giftNo">Пока нет</button>
+    </div>
+    <p class="gift-no-message" id="giftNoMessage"></p>
+  </div>
+
+  <!-- Документ с подписью -->
+  <div class="gift-stage" id="stage4" style="display:none;">
+    <h2 class="gift-doc-title">Свидетельство о помолвке</h2>
+
+    <div class="gift-doc">
+      <p class="gift-doc-line">Я, <b>Илья</b>, готов взять в жёны <b>Катю</b> — с этого дня и навсегда.</p>
+      <div class="gift-sign-block">
+  <span class="gift-sign-label">Подпись Ильи:</span>
+  <div class="sign-anim-wrap">
+    <img
+      src="images/signature/ilya-sign.png"
+      alt="Подпись Ильи"
+      class="gift-sign-image"
+      id="ilyaSign"
+      onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';"
+    >
+    <span class="gift-sign-value" style="display:none;">И. ❤</span>
+  </div>
+</div>
+
+      <div class="gift-divider"></div>
+
+      <p class="gift-doc-line">Я, <b>Катя</b>, готова взять в мужья <b>Илью</b> — по-настоящему и на всю жизнь.</p>
+      <div class="gift-sign-block">
+        <span class="gift-sign-label">Подпись Кати:</span>
+        <canvas id="signCanvas" class="sign-canvas" width="300" height="120"></canvas>
+      </div>
+    </div>
+
+    <p class="gift-doc-hint" id="signHint">Распишись пальцем в квадрате ↑</p>
+
+    <div class="gift-doc-done" id="docDone" style="display:none;">
+      <p class="gift-done-text">Готово ❤</p>
+      <button class="gift-share" id="giftShare">📸 Сделать скриншот и поделиться</button>
+    </div>
+  </div>
+
+  <button class="gift-close" id="giftClose">✕</button>
+</div>
+  <button class="music-toggle" id="musicToggle" title="Фоновая музыка">🎵</button>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-content">
+      <p class="hero-greeting">Привет,</p>
+      <h1 class="hero-name">Катя</h1>
+      <p class="hero-text">
+        Я знаю, что я делал тебе уже подобное, может, будет уже не так интересно,
+        как в первый раз, ну я всё равно хочу сделать что-то подобное.
+      </p>
+      <p class="hero-sign">От Ильи ❤</p>
+    </div>
+
+    <div class="counter-card">
+      <p class="counter-label">Мы вместе</p>
+      <div class="counter-main">
+        <div class="counter-block">
+          <div class="counter-num" id="monthsNum">0</div>
+          <div class="counter-lbl">месяц</div>
+        </div>
+        <div class="counter-block">
+          <div class="counter-num" id="daysNum">0</div>
+          <div class="counter-lbl">дней</div>
+        </div>
+      </div>
+      <p class="counter-time">
+        и ещё <span id="hoursNum">00</span> ч
+        <span id="minutesNum">00</span> мин
+        <span id="secondsNum">00</span> сек
+      </p>
+    </div>
+  </section>
+
+  <!-- ВОСПОМИНАНИЯ -->
+  <section class="memories" id="memories">
+    <h2 class="section-title">Наши воспоминания</h2>
+    <p class="section-subtitle">несколько моментов, которые я храню</p>
+
+    <div class="memory-block" data-memory="1">
+      <div class="memory-header">
+        <span class="memory-num">01</span>
+        <h3 class="memory-title">Вот тут мы просто смеялись и разговаривали обо всём и немного дурачились</h3>
+      </div>
+      <div class="memory-grid memory-grid-4">
+        <img src="images/memory1/photo1.jpg" alt="" class="memory-photo" onclick="openPhoto(this.src)">
+        <img src="images/memory1/photo2.jpg" alt="" class="memory-photo" onclick="openPhoto(this.src)">
+        <img src="images/memory1/photo3.jpg" alt="" class="memory-photo" onclick="openPhoto(this.src)">
+        <img src="images/memory1/photo4.jpg" alt="" class="memory-photo" onclick="openPhoto(this.src)">
+      </div>
+    </div>
+
+    <div class="memory-block" data-memory="2">
+      <div class="memory-header">
+        <span class="memory-num">02</span>
+        <h3 class="memory-title">Вот тут наша первая годовщина</h3>
+      </div>
+      <div class="memory-grid memory-grid-3">
+        <img src="images/memory2/photo1.jpg" alt="" class="memory-photo" onclick="openPhoto(this.src)">
+        <img src="images/memory2/photo2.jpg" alt="" class="memory-photo" onclick="openPhoto(this.src)">
+        <img src="images/memory2/photo3.jpg" alt="" class="memory-photo" onclick="openPhoto(this.src)">
+      </div>
+    </div>
+
+    <div class="memory-block" data-memory="3">
+      <div class="memory-header">
+        <span class="memory-num">03</span>
+        <h3 class="memory-title">Тут наши вайбовые совместные фотки</h3>
+      </div>
+      <div class="memory-grid memory-grid-9">
+        <img src="images/memory3/photo1.jpg" alt="" class="memory-photo" onclick="openPhoto(this.src)">
+        <img src="images/memory3/photo2.jpg" alt="" class="memory-photo" onclick="openPhoto(this.src)">
+        <img src="images/memory3/photo3.jpg" alt="" class="memory-photo" onclick="openPhoto(this.src)">
+        <img src="images/memory3/photo4.jpg" alt="" class="memory-photo" onclick="openPhoto(this.src)">
+        <img src="images/memory3/photo5.jpg" alt="" class="memory-photo" onclick="openPhoto(this.src)">
+        <img src="images/memory3/photo6.jpg" alt="" class="memory-photo" onclick="openPhoto(this.src)">
+        <img src="images/memory3/photo7.jpg" alt="" class="memory-photo" onclick="openPhoto(this.src)">
+        <img src="images/memory3/photo8.jpg" alt="" class="memory-photo" onclick="openPhoto(this.src)">
+        <img src="images/memory3/photo9.jpg" alt="" class="memory-photo" onclick="openPhoto(this.src)">
+      </div>
+    </div>
+
+    <div class="memory-block" data-memory="4">
+      <div class="memory-header">
+        <span class="memory-num">04</span>
+        <h3 class="memory-title">Наше совместное видео</h3>
+      </div>
+      <div class="video-card" onclick="openVideo()">
+        <video class="video-preview" muted playsinline preload="metadata">
+          <source src="videos/our-video.mp4" type="video/mp4">
+        </video>
+        <div class="video-play-overlay">
+          <div class="video-play-icon">▶</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- МУЗЫКА -->
+  <section class="music-section" id="music-section">
+    <h2 class="section-title">Наша любимая музыка</h2>
+    <p class="section-subtitle">наша совместка ❤</p>
+
+    <div class="player-card">
+      <div class="player-left">
+        <div class="player-cover" id="playerCover">
+          <div class="cover-vinyl"></div>
+          <div class="cover-heart">♪</div>
+        </div>
+        <div class="player-info">
+          <p class="player-artist">Гуф</p>
+          <p class="player-title">Письмо домой</p>
+        </div>
+      </div>
+
+      <div class="player-center">
+        <button class="player-play" id="playerPlay">▶</button>
+        <div class="player-progress-wrap">
+          <span class="player-time" id="playerCurrent">0:00</span>
+          <div class="player-progress" id="playerProgress">
+            <div class="player-progress-fill" id="playerProgressFill"></div>
+          </div>
+          <span class="player-time" id="playerDuration">0:00</span>
+        </div>
+      </div>
+
+      <div class="player-lyrics" id="playerLyrics"></div>
+    </div>
+
+    <audio id="audioPlayer" preload="metadata">
+      <source src="music/song.mp3" type="audio/mpeg">
+    </audio>
+  </section>
+
+  <footer class="footer">
+    <p>Сделано специально для тебя. С любовью, Илья.</p>
+  </footer>
+</div>
+
+<!-- МОДАЛКА: ФОТО -->
+<div class="modal-overlay" id="photoModal" onclick="closePhoto(event)">
+  <button class="modal-close" onclick="closePhoto(event)">✕</button>
+  <img src="" alt="" class="modal-photo" id="modalPhoto">
+</div>
+
+<!-- МОДАЛКА: ВИДЕО -->
+<div class="modal-overlay" id="videoModal" onclick="closeVideo(event)">
+  <button class="modal-close" onclick="closeVideo(event)">✕</button>
+  <video class="modal-video" id="modalVideo" controls playsinline>
+    <source src="videos/our-video.mp4" type="video/mp4">
+  </video>
+</div>
+
+<!-- МОДАЛКА: ПИСЬМО -->
+<div class="envelope-overlay" id="envelopeOverlay">
+  <div class="envelope-scene">
+    <div class="envelope" id="envelope">
+      <div class="env-back"></div>
+
+      <div class="env-letter" id="envLetter">
+        <div class="letter-paper">
+          <div class="letter-content" id="letterContent">
+            <!-- ТЕКСТ ПИСЬМА. Печатается автоматически при открытии конверта. -->
+
+            <p class="letter-greeting">Катя,</p>
+
+            <p>я тут постараюсь объяснить всё, что чувствую к тебе. Не суди строго — красиво писать не умею.</p>
+
+            <p>Ну что ж… любимая моя девочка, я тебя очень сильно люблю ❤️. Спасибо, что ты появилась у меня — хоть и не смотря на всё, что было между нами, мы остаёмся вместе. Это уже большой шаг в отношениях, как по мне.</p>
+
+            <p>Ты очень красивая у меня — и я это не только про внешность. Не думай, что я влюбился в твоё тело и всё такое. Я влюбился в тебя настоящую — в твою искреннюю улыбку, искренний смех. Когда мы только впервые увиделись, когда ты шла к нам, у меня сердце заколотилось так, как никогда раньше. Такое может быть было только когда я родился 😅. От тебя сразу повеяло теплом и заботой — и не зря мне так показалось в тот момент, я всё это увидел и дальше.</p>
+
+            <p>Я помню каждую минуту первой встречи. Много раз уже говорил всё это, ну что ж, могу поделать — такой вот я. В тот день я и понял, что хочу быть с тобой. Хочу видеть тебя не в роли своей знакомой или подруги, а именно девушкой. И у нас получилось). Сейчас ты моя самая любимая девочка, единственная девочка и самая-самая дорогая.</p>
+
+            <p>В тот момент я влюбился не в твоё тело, а в твою душу и искренность. Ты не вела себя так, будто это надо так общаться и быть такой — ты была искренней по-настоящему. Потом я увидел твои глазки. В них много боли, но ты не вешаешь нос, а карабкаешься дальше по этому нелёгкому пути. Ты большая молодец, очень сильная девочка.</p>
+
+            <p>Про твоё личико тоже можно много чего сказать. У тебя все черты лица прекрасны, гармоничны. Знаешь, до тебя я думал, что таких идеальных не существует — а тут появилась ты, и я понял, что оказывается существуют. Мне не нужны другие, мне нужна именно ты. В тот день я выбрал тебя, и я выбираю тебя каждый день, каждую минуту, каждую секунду.</p>
+
+            <p>Ну а со временем я много чего узнал о тебе. И честно не могу не упомянуть про тело — солнышко, ты идеальная во всех планах.</p>
+
+            <p>Честно, я до сих пор не знаю, чем я тебя зацепил. Но я рад, что мы вместе. Я очень сильно дорожу тобой. При каждой нашей ссоре я очень переживаю за нас, я не хочу больше терять тебя. Ты единственный человек, который смог вытащить меня, так скажем, из небольшой двухгодовой депрессии. Кто мне даже в самый тяжёлый и ужасный день поднимает настроение одним своим сообщением.</p>
+
+            <p>Ты та, о которой я думаю 24/7: «как она там?», «нормально ли всё у неё?», «как у неё день прошёл?». Вот такого рода мысли — и «какая ж она у меня хорошая, какая ж она у меня красивая и милая» — перед сном. Раньше я думал ни о чём, просто засыпал и просыпался также, в пустоте. А сейчас я засыпаю в мыслях о тебе и просыпаюсь, думая о тебе. Раньше, когда я просыпался, я открывал тт, а сейчас я как только проснулся — сразу тебе в телеграм и пишу.</p>
+
+            <p>Я очень сильно люблю тебя ❣️ Спасибо, что остаёшься со мной по сей день.</p>
+
+            <p>Просто знай, любимая: кто бы что ни говорил, как бы что-либо ни казалось — в сердце только ты. Жду только тебя, ценю только тебя, люблю только тебя. Мне никто не нужен, кроме тебя. Знаю, что слова — это одно дело, но я готов доказывать действиями. Я очень боюсь потерять тебя. Столько раз терял — и честно сказать, это очень сложно, когда в один день у вас всё хорошо, а на следующий день твой мир рушится…</p>
+
+            <p>Я много могу ещё написать, ну и так уже, наверное, много. Просто знай: ты моё всё.</p>
+
+            <p class="letter-signature">Люблю тебя ❣️ и никогда ни на кого не променяю ❤️</p>
+
+            <span class="letter-cursor" id="letterCursor"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="env-front-left"></div>
+      <div class="env-front-right"></div>
+      <div class="env-front-bottom"></div>
+      <div class="env-flap"></div>
+
+      <div class="env-seal" id="envSeal">
+        <span>От Ильи</span>
+        <span>для Кати</span>
+      </div>
+
+      <div class="env-hint">нажми, чтобы открыть</div>
+    </div>
+
+    <button class="envelope-close" onclick="closeEnvelope()">✕</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

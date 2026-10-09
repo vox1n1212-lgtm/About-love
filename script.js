@@ -408,7 +408,7 @@ let bgAudio = null;
 
 musicToggle.addEventListener('click', () => {
   if (!bgAudio) {
-    bgAudio = new Audio('music/song.mp3');
+    bgAudio = new Audio('https://example.com/song.mp3');
     bgAudio.loop = true;
     bgAudio.volume = 0.4;
   }
